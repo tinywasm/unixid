@@ -195,23 +195,3 @@ func (id *UnixID) GetNewID() string {
 
 	return outID
 }
-
-// UnixNanoToTime converts a Unix timestamp in nanoseconds to a formatted time string.
-// Format: "15:04:05" (hour:minute:second)
-// It accepts a parameter of type any and attempts to convert it to an int64 Unix timestamp in nanoseconds.
-// eg: 1624397134562544800 -> "15:32:14"
-// supported types: int64, int, float64, string
-func (id *UnixID) UnixNanoToTime(input any) string {
-	return id.TimeProvider.FormatTime(input)
-}
-
-// UnixSecondsToDate converts Unix seconds to a formatted date string.
-// Format: "2006-01-02 15:04" (YYYY-MM-DD HH:MM)
-// eg: 1624397134 -> "2021-06-22 15:32"
-func (id *UnixID) UnixSecondsToDate(unixSeconds int64) string {
-	dateTime := id.TimeProvider.FormatDateTime(unixSeconds * 1e9)
-	if len(dateTime) >= 16 {
-		return dateTime[:16]
-	}
-	return dateTime
-}

@@ -46,15 +46,6 @@ func main() {
 
 	fmt.Printf("Generated ID: %s\n", id)
 	// Output: Generated ID: 1624397134562544800
-
-	// Convert an ID to a human-readable date
-	dateStr, err := idHandler.UnixNanoToStringDate(id)
-	if err != nil {
-		panic(err)
-	}
-
-	println("ID timestamp represents: ", dateStr)
-	// Output: ID timestamp represents: 2021-06-23 15:38:54
 }
 ```
 
@@ -195,18 +186,37 @@ This behavior assumes that external synchronization is being properly handled by
 
     ```
 
-- `UnixNanoToStringDate(unixNanoStr)`: Converts a Unix nanosecond timestamp ID to a human-readable date
+- `Validate(id string) error`: Validates the format of an ID string without parsing it
+  - Fast validation for checking ID format
+  - Returns error if format is invalid
+  - Example usage:
+    ```go
+    err := idHandler.Validate("1624397134562544800")
+    if err != nil {
+        // Invalid ID format
+    }
+    ```
 
-### Additional Utility Functions
+- `Parse(id string) (timestamp int64, userNum string, error)`: Parses an ID string and extracts its components
+  - Validates format first, then extracts timestamp and optional user number
+  - Returns timestamp as int64, userNum as string (empty if not present)
+  - Example usage:
+    ```go
+    timestamp, userNum, err := idHandler.Parse("1624397134562544800.42")
+    if err != nil {
+        // Invalid ID format
+    }
+    fmt.Printf("Timestamp: %d, UserNum: %s\n", timestamp, userNum)
+    // Output: Timestamp: 1624397134562544800, UserNum: 42
+    ```
 
-- `UnixSecondsToTime(unixSeconds any) string`: Converts a Unix timestamp in seconds to a formatted time string (HH:mm:ss). e.g., `1624397134` -> `15:38:54` supports `int64`, `string`, and `float64` types
+## Validate and Parse IDs
 
+The library provides two methods for working with existing IDs:
 
-## Validate ID
+### Validation Only
 
-The `ValidateID` function validates and parses a given ID string. It returns the parsed ID as an `int64` and an error if the ID is invalid.
-
-### Example
+Use `Validate()` when you only need to check if an ID format is valid:
 
 ```go
 package main
@@ -217,16 +227,53 @@ import (
 )
 
 func main() {
+	idHandler, _ := unixid.NewUnixID()
+	
 	id := "1624397134562544800"
-	parsedID, err := unixid.ValidateID(id)
+	err := idHandler.Validate(id)
+	if err != nil {
+		fmt.Println("Invalid ID format")
+		return
+	}
+	
+	fmt.Println("Valid ID format")
+}
+```
+
+### Parsing ID Components
+
+Use `Parse()` when you need to extract the timestamp and user number:
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/cdvelop/unixid"
+)
+
+func main() {
+	idHandler, _ := unixid.NewUnixID()
+	
+	// Parse server-side ID
+	timestamp, userNum, err := idHandler.Parse("1624397134562544800")
 	if err != nil {
 		panic(err)
 	}
-
-	fmt.Printf("Parsed ID: %d\n", parsedID)
-	// Output: Parsed ID: 1624397134562544800
+	fmt.Printf("Timestamp: %d, UserNum: %s\n", timestamp, userNum)
+	// Output: Timestamp: 1624397134562544800, UserNum: 
+	
+	// Parse client-side ID
+	timestamp, userNum, err = idHandler.Parse("1624397134562544800.42")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Timestamp: %d, UserNum: %s\n", timestamp, userNum)
+	// Output: Timestamp: 1624397134562544800, UserNum: 42
 }
 ```
+
+
 
 ## Environment-Based Configuration
 
