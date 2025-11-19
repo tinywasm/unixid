@@ -28,14 +28,17 @@ func (u *UnixID) UnixNanoToStringDate(unixNanoStr string) (string, error) {
 		return "", err
 	}
 
-	// Convert nanoseconds to seconds (truncate)
-	unixSeconds := unixNano / 1e9
-
 	if u.TimeProvider == nil {
-		return "", Err("adaptador TimeProvider nil")
+		return "", Err("TimeProvider nil")
 	}
 
-	return u.TimeProvider.UnixSecondsToDate(unixSeconds), nil
+	// Format the nanosecond timestamp to "YYYY-MM-DD HH:MM:SS"
+	dateTime := u.TimeProvider.FormatDateTime(unixNano)
+	// Return only date and time without seconds (HH:MM format)
+	if len(dateTime) >= 16 {
+		return dateTime[:16], nil // "2006-01-02 15:04"
+	}
+	return dateTime, nil
 }
 
 // https://chat.openai.com/c/4af98def-f8d9-4095-bf31-deaaad84c094
