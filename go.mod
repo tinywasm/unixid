@@ -1,8 +1,8 @@
-module github.com/cdvelop/unixid
+module github.com/tinywasm/unixid
 
 go 1.25.2
 
 require (
-	github.com/cdvelop/tinystring v0.10.4
-	github.com/cdvelop/tinytime v0.2.6
+	github.com/tinywasm/fmt v0.12.2
+	github.com/tinywasm/time v0.2.8
 )

@@ -1,10 +1,10 @@
-package unixid_test
+package unixid
 
 import (
 	"testing"
 	"time"
 
-	"github.com/cdvelop/unixid"
+	"github.com/tinywasm/unixid"
 )
 
 // TestGetNewIDWithCorrectFormatting prueba el flujo completo de generación de IDs

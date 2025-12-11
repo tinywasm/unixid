@@ -1,9 +1,9 @@
-package unixid_test
+package unixid
 
 import (
 	"testing"
 
-	"github.com/cdvelop/unixid"
+	"github.com/tinywasm/unixid"
 )
 
 func TestParse(t *testing.T) {

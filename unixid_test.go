@@ -1,11 +1,11 @@
-package unixid_test
+package unixid
 
 import (
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/cdvelop/unixid"
+	"github.com/tinywasm/unixid"
 )
 
 func Test_GetNewID(t *testing.T) {

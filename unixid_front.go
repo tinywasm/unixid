@@ -3,11 +3,11 @@
 
 package unixid
 
-import "github.com/cdvelop/tinytime"
+import "github.com/tinywasm/time"
 
-// createUnixID para WASM ahora usa tinytime.TimeProvider
+// createUnixID para WASM ahora usa time.TimeProvider
 func createUnixID(handlerUserSessionNumber ...any) (*UnixID, error) {
-	t := tinytime.NewTimeProvider()
+	t := time.NewTimeProvider()
 
 	c := &Config{
 		Session:      &defaultEmptySession{},

@@ -1,11 +1,11 @@
-package unixid_test
+package unixid
 
 import (
 	"reflect"
 	"testing"
 
-	. "github.com/cdvelop/tinystring"
-	"github.com/cdvelop/unixid"
+	. "github.com/tinywasm/fmt"
+	"github.com/tinywasm/unixid"
 )
 
 // Estructura para pruebas

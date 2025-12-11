@@ -1,7 +1,7 @@
 package unixid
 
 import (
-	. "github.com/cdvelop/tinystring"
+	. "github.com/tinywasm/fmt"
 )
 
 // Parse parses an ID string and extracts its components.

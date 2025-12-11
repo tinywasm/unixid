@@ -1,8 +1,8 @@
 package unixid
 
 import (
-	. "github.com/cdvelop/tinystring"
-	"github.com/cdvelop/tinytime"
+	. "github.com/tinywasm/fmt"
+	"github.com/tinywasm/time"
 )
 
 const sizeBuf = int32(19)
@@ -62,7 +62,7 @@ type Config struct {
 	Session userSessionNumber // e.g., userSessionNumber() string = "1","4","4000" etc.
 
 	// TimeProvider provides time utilities including nanosecond timestamps and date formatting
-	TimeProvider tinytime.TimeProvider // Provides UnixNano(), UnixSecondsToDate(), and UnixNanoToTime()
+	TimeProvider time.TimeProvider // Provides UnixNano(), UnixSecondsToDate(), and UnixNanoToTime()
 
 	// syncMutex provides thread safety for concurrent ID generation
 	syncMutex lockHandler // e.g., sync.Mutex{}

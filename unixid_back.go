@@ -6,12 +6,12 @@ package unixid
 import (
 	"sync"
 
-	"github.com/cdvelop/tinytime"
+	"github.com/tinywasm/time"
 )
 
-// createUnixID para server usa tinytime.TimeProvider
+// createUnixID para server usa time.TimeProvider
 func createUnixID(params ...any) (*UnixID, error) {
-	t := tinytime.NewTimeProvider()
+	t := time.NewTimeProvider()
 
 	c := &Config{
 		Session:      &defaultEmptySession{},
