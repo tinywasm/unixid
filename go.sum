@@ -1,4 +1,4 @@
-github.com/cdvelop/tinystring v0.10.4 h1:Vsj/2WU2I682TAGV0GMYujMhZNHgFlnc3gjKy53GqOg=
-github.com/cdvelop/tinystring v0.10.4/go.mod h1:m12IsLVkhIRv/kA7bercPtzfdZhx2WtuZUPZWZhUsgw=
-github.com/cdvelop/tinytime v0.2.6 h1:+XGH9nm85yoQzZeG0TZ8eJpWKdaistIbxHI37PVth2o=
-github.com/cdvelop/tinytime v0.2.6/go.mod h1:Qge1Lm+JZKoKZxHWBEyDtSVrH1gGBgKjoz+doFmCyEU=
+github.com/tinywasm/fmt v0.14.0 h1:Z3mudKuoxRPB97VEisk9pkV2tdvt2YxgJygPJEcPeo4=
+github.com/tinywasm/fmt v0.14.0/go.mod h1:L2GCAi6asgytPV6TVvGrRq5Ml+DkUt1Ijo5i/2J1jOY=
+github.com/tinywasm/time v0.3.0 h1:2r1SppZolSvPLf73hrINLQ1RyqR2uDbNDk4KKbqQ/40=
+github.com/tinywasm/time v0.3.0/go.mod h1:dPW5LITwcw3ZKF6SyMmm+DV9KkRVor14SRRyX8KXpyk=

@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	. "github.com/tinywasm/fmt"
-	"github.com/tinywasm/unixid"
 )
 
 // Estructura para pruebas
@@ -23,7 +22,7 @@ func (mockSessionHandler) userSessionNumber() string {
 func TestSetNewID(t *testing.T) {
 	// Creamos una sola instancia de UnixID para todos los subtests
 	// para evitar la sobrecarga de crear múltiples instancias
-	uid, err := unixid.NewUnixID()
+	uid, err := NewUnixID()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -70,7 +69,7 @@ func TestSetNewID(t *testing.T) {
 		v := reflect.ValueOf(&testObj)
 		elem := v.Elem()
 		field := elem.Field(0) // ID es el primer campo (índice 0)
-		uid.SetNewID(&field) // Pasamos un puntero a la Value
+		uid.SetNewID(&field)   // Pasamos un puntero a la Value
 
 		if testObj.ID == "" {
 			t.Fatal("El ID generado no puede estar vacío")
@@ -121,7 +120,7 @@ func TestSetNewID(t *testing.T) {
 
 // Añadimos un benchmark para SetNewID para medir su rendimiento
 func BenchmarkSetNewID(b *testing.B) {
-	uid, _ := unixid.NewUnixID()
+	uid, _ := NewUnixID()
 	var id string
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

@@ -4,16 +4,15 @@ import (
 	"sync"
 	"testing"
 	"time"
-
-	"github.com/tinywasm/unixid"
 )
 
+// TestGetNewIDWithCorrectFormatting prueba el flujo completo de generación de IDs
 func Test_GetNewID(t *testing.T) {
 	idRequired := 10000
 	wg := sync.WaitGroup{}
 	wg.Add(idRequired)
 
-	uid, err := unixid.NewUnixID()
+	uid, err := NewUnixID()
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -48,7 +47,7 @@ func Test_GetNewID(t *testing.T) {
 }
 
 func BenchmarkGetNewID(b *testing.B) {
-	uid, _ := unixid.NewUnixID()
+	uid, _ := NewUnixID()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		uid.GetNewID()
@@ -57,7 +56,7 @@ func BenchmarkGetNewID(b *testing.B) {
 
 // Prueba adicional para verificar que no haya duplicados al generar muchos IDs
 func TestNoDuplicateIDs(t *testing.T) {
-	uid, err := unixid.NewUnixID()
+	uid, err := NewUnixID()
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -78,7 +77,7 @@ func TestNoDuplicateIDs(t *testing.T) {
 
 // Prueba para verificar que se generen IDs secuenciales cuando hay colisiones de timestamp
 func TestSequentialIDs(t *testing.T) {
-	uid, err := unixid.NewUnixID()
+	uid, err := NewUnixID()
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -111,7 +110,7 @@ func TestExternalMutexNoDeadlock(t *testing.T) {
 	externalMutex := &sync.Mutex{}
 
 	// Creamos una instancia de UnixID pasando el mutex externo
-	uid, err := unixid.NewUnixID(externalMutex)
+	uid, err := NewUnixID(externalMutex)
 	if err != nil {
 		t.Fatalf("Error creando UnixID con mutex externo: %v", err)
 		return

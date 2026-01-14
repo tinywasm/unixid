@@ -3,13 +3,11 @@ package unixid
 import (
 	"testing"
 	"time"
-
-	"github.com/tinywasm/unixid"
 )
 
 // TestGetNewIDWithCorrectFormatting prueba el flujo completo de generación de IDs
 func TestGetNewIDWithCorrectFormatting(t *testing.T) {
-	uid, err := unixid.NewUnixID()
+	uid, err := NewUnixID()
 	if err != nil {
 		t.Fatal("Error creating unixid:", err)
 	}

@@ -1,18 +1,12 @@
 //go:build wasm
-// +build wasm
 
 package unixid
 
-import "github.com/tinywasm/time"
-
-// createUnixID para WASM ahora usa time.TimeProvider
+// createUnixID for WASM implementation
 func createUnixID(handlerUserSessionNumber ...any) (*UnixID, error) {
-	t := time.NewTimeProvider()
-
 	c := &Config{
-		Session:      &defaultEmptySession{},
-		TimeProvider: t,
-		syncMutex:    &defaultNoOpMutex{},
+		Session:   &defaultEmptySession{},
+		syncMutex: &defaultNoOpMutex{},
 	}
 
 	for _, u := range handlerUserSessionNumber {

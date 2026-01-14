@@ -2,12 +2,10 @@ package unixid
 
 import (
 	"testing"
-
-	"github.com/tinywasm/unixid"
 )
 
 func TestParse(t *testing.T) {
-	uid, err := unixid.NewUnixID()
+	uid, err := NewUnixID()
 	if err != nil {
 		t.Fatal("Error creating unixid:", err)
 	}
