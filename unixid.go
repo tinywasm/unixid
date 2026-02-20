@@ -53,15 +53,15 @@ func NewUnixID(handlerUserSessionNumber ...any) (*UnixID, error) {
 
 func configCheck(c *Config) (*UnixID, error) {
 	if c == nil {
-		return nil, Err(D.Required, D.Configuration, D.Options)
+		return nil, Err("required", "configuration", "options")
 	}
 
 	if c.Session == nil {
-		return nil, Err(D.Required, D.Session, D.Handler)
+		return nil, Err("required", "session", "handler")
 	}
 
 	if c.syncMutex == nil {
-		return nil, Err(D.Required, D.Sync, "Mutex")
+		return nil, Err("required", "sync", "Mutex")
 	}
 
 	return &UnixID{

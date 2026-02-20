@@ -19,7 +19,7 @@ import (
 //   - The ID must not start or end with a decimal point
 //   - The timestamp portion (before the decimal point) must be valid
 func (u *UnixID) Validate(id string) error {
-	msg_invalid := Err(D.Character, D.Invalid, D.Not, D.Supported)
+	msg_invalid := Err("character", "invalid", "not", "supported")
 
 	if len(id) == 0 {
 		return msg_invalid
@@ -35,7 +35,7 @@ func (u *UnixID) Validate(id string) error {
 		if char == '.' {
 			point_count++
 			if point_count > 1 {
-				return Err(D.Format, D.Invalid, D.Found, D.More, D.Point)
+				return Err("format", "invalid", "found", "more", "point")
 			}
 		} else if char < '0' || char > '9' {
 			return msg_invalid

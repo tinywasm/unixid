@@ -40,7 +40,7 @@ func (u *UnixID) Parse(id string) (timestamp int64, userNum string, err error) {
 	// Convierte el timestamp a int64
 	timestamp, er := Convert(timestamp_str).Int64()
 	if er != nil {
-		return 0, "", Err(D.Invalid, D.Format)
+		return 0, "", Err("format", "invalid")
 	}
 
 	return timestamp, userNum, nil
