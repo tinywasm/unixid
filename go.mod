@@ -3,6 +3,6 @@ module github.com/tinywasm/unixid
 go 1.25.2
 
 require (
-	github.com/tinywasm/fmt v0.18.17
+	github.com/tinywasm/fmt v0.19.0
 	github.com/tinywasm/time v0.3.1
 )
