@@ -4,5 +4,5 @@ go 1.25.2
 
 require (
 	github.com/tinywasm/fmt v0.22.1
-	github.com/tinywasm/time v0.3.1
+	github.com/tinywasm/time v0.4.0
 )
