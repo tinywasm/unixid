@@ -1,6 +1,7 @@
-package unixid
+package unixid__test
 
 import (
+	. "github.com/tinywasm/unixid"
 	"sync"
 	"testing"
 	"time"
@@ -25,7 +26,7 @@ func Test_GetNewID(t *testing.T) {
 		go func() {
 			defer wg.Done()
 
-			id := uid.GetNewID()
+			id := uid.NewID()
 
 			esperar.Lock()
 			if cantId, exist := idObtained[id]; exist {
@@ -50,7 +51,7 @@ func BenchmarkGetNewID(b *testing.B) {
 	uid, _ := NewUnixID()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		uid.GetNewID()
+		uid.NewID()
 	}
 }
 
@@ -67,7 +68,7 @@ func TestNoDuplicateIDs(t *testing.T) {
 	ids := make(map[string]bool)
 
 	for i := 0; i < numIDs; i++ {
-		id := uid.GetNewID()
+		id := uid.NewID()
 		if _, exists := ids[id]; exists {
 			t.Fatalf("ID duplicado encontrado: %s", id)
 		}
@@ -87,7 +88,7 @@ func TestSequentialIDs(t *testing.T) {
 	// pero deberían tener números secuenciales añadidos
 	ids := make([]string, 10)
 	for i := 0; i < 10; i++ {
-		ids[i] = uid.GetNewID()
+		ids[i] = uid.NewID()
 	}
 
 	// Verificar que tengamos al menos algunos IDs diferentes
@@ -102,7 +103,7 @@ func TestSequentialIDs(t *testing.T) {
 }
 
 // TestExternalMutexNoDeadlock verifica que cuando se proporciona un mutex externo,
-// la llamada a GetNewID no se bloquee cuando ya hay un lock adquirido con el mismo mutex.
+// la llamada a NewID no se bloquee cuando ya hay un lock adquirido con el mismo mutex.
 // Esta prueba verifica el comportamiento actualizado donde se usa un no-op mutex internamente
 // cuando se proporciona un mutex externo para prevenir deadlocks.
 func TestExternalMutexNoDeadlock(t *testing.T) {
@@ -126,7 +127,7 @@ func TestExternalMutexNoDeadlock(t *testing.T) {
 	go func() {
 		// Esto NO debería bloquearse con la nueva lógica, ya que
 		// internamente estamos usando un defaultNoOpMutex
-		id := uid.GetNewID()
+		id := uid.NewID()
 		if id == "" {
 			t.Error("Se generó un ID vacío")
 		}
@@ -136,16 +137,16 @@ func TestExternalMutexNoDeadlock(t *testing.T) {
 	// Esperamos brevemente para ver si se completa la generación del ID
 	select {
 	case <-done:
-		// Este es el comportamiento esperado: GetNewID no se bloquea
+		// Este es el comportamiento esperado: NewID no se bloquea
 		// porque internamente estamos usando un defaultNoOpMutex
 	case <-time.After(time.Millisecond * 500):
-		t.Fatal("GetNewID se bloqueó a pesar de usar un no-op mutex internamente")
+		t.Fatal("NewID se bloqueó a pesar de usar un no-op mutex internamente")
 	}
 
 	// Verificación adicional: generar varios IDs sin problemas mientras el mutex está bloqueado
 	ids := make(map[string]bool)
 	for i := 0; i < 10; i++ {
-		id := uid.GetNewID()
+		id := uid.NewID()
 		if id == "" {
 			t.Fatalf("Se generó un ID vacío en la iteración %d", i)
 		}

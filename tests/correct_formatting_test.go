@@ -1,6 +1,7 @@
-package unixid
+package unixid__test
 
 import (
+	. "github.com/tinywasm/unixid"
 	"testing"
 	"time"
 )
@@ -16,7 +17,7 @@ func TestGetNewIDWithCorrectFormatting(t *testing.T) {
 	var ids []string
 
 	for i := 0; i < 3; i++ {
-		id := uid.GetNewID() // Devuelve nanosegundos como string
+		id := uid.NewID() // Devuelve nanosegundos como string
 		ids = append(ids, id)
 
 		t.Logf("Mensaje %d - ID: %s", i+1, id)

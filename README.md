@@ -40,7 +40,7 @@ func main() {
 	}
 
 	// Generate a new unique ID
-	id := idHandler.GetNewID()
+	id := idHandler.NewID()
 
 	fmt.Printf("Generated ID: %s\n", id)
 	// Output: Generated ID: 1624397134562544800
@@ -110,9 +110,9 @@ func main() {
 When an external mutex is provided to `NewUnixID()`, the library automatically detects this and changes its behavior:
 
 1. Instead of using the provided mutex internally, it switches to a no-op mutex that doesn't perform any actual locking.
-2. This allows `GetNewID()` to be safely called from within a context that has already acquired the same mutex.
+2. This allows `NewID()` to be safely called from within a context that has already acquired the same mutex.
 
-Example of using `GetNewID()` inside a locked context:
+Example of using `NewID()` inside a locked context:
 
 ```go
 var mu sync.Mutex
@@ -127,7 +127,7 @@ defer mu.Unlock()
 
 // This won't deadlock because internally the library uses a no-op mutex
 // when an external mutex is provided
-id := idHandler.GetNewID()
+id := idHandler.NewID()
 // Do something with id...
 ```
 
@@ -145,12 +145,11 @@ This behavior assumes that external synchronization is being properly handled by
   - No mutex in WebAssembly as JavaScript is single-threaded
   - Can accept an existing `sync.Mutex` or `*sync.Mutex` to prevent deadlocks when integrating with other libraries
 
-- `GetNewID()`: Generates a new unique ID
+- `NewID()`: Generates a new unique ID
   - Returns a string representation of the ID
   - In WebAssembly builds, appends a user session number to the timestamp
 
-- `SetNewID(target any)`: Sets a new unique ID to various target types
-  - Accepts pointers to string, reflect.Value, or byte slices
+- `SetNewID(target *string)`: Generates a new unique ID and assigns it to target
   - Thread-safe in server environments
   - Example usages:
     ```go
@@ -162,26 +161,6 @@ This behavior assumes that external synchronization is being properly handled by
     type User struct { ID string }
     user := User{}
     idHandler.SetNewID(&user.ID)
-    
-    // Append ID to a byte slice
-    buf := make([]byte, 0, 64)
-    idHandler.SetNewID(buf)
-
-	// Set ID to a tinyreflect.Value
-	v := tinyreflect.ValueOf(&user)
-	// The ValueOf(&data) returns a Ptr. We need to get the element it points to
-	// before we can access its fields. This is what Elem() does.
-	structVal, err := v.Elem()
-	if err != nil {
-		// Failed to get element from pointer value:...
-	}
-
-	IDField, err := structVal.Field(0)
-	if err != nil {
-		// Failed to get field 'ID':...
-	}
-	idHandler.SetNewID(&IDField)
-
     ```
 
 - `Validate(id string) error`: Validates the format of an ID string without parsing it

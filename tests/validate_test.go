@@ -1,6 +1,7 @@
-package unixid
+package unixid__test
 
 import (
+	. "github.com/tinywasm/unixid"
 	"testing"
 )
 

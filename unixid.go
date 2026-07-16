@@ -2,7 +2,7 @@ package unixid
 
 import (
 	. "github.com/tinywasm/fmt"
-	tinytime "github.com/tinywasm/time"
+	"github.com/tinywasm/time"
 )
 
 const sizeBuf = int32(19)
@@ -74,7 +74,7 @@ func configCheck(c *Config) (*UnixID, error) {
 }
 
 func (id *UnixID) unixIdNano() string {
-	currentUnixNano := tinytime.Now()
+	currentUnixNano := time.Now()
 
 	if currentUnixNano == id.lastUnixNano {
 		id.correlativeNumber++
@@ -87,8 +87,8 @@ func (id *UnixID) unixIdNano() string {
 	return Convert(currentUnixNano).String()
 }
 
-// GetNewID generates a new unique ID based on Unix nanosecond timestamp (UTC).
-func (id *UnixID) GetNewID() string {
+// NewID generates a new unique ID based on Unix nanosecond timestamp (UTC).
+func (id *UnixID) NewID() string {
 	id.syncMutex.Lock()
 	defer id.syncMutex.Unlock()
 
